@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
-import { Text } from "@chakra-ui/react";
+import { SimpleGrid, Text } from "@chakra-ui/react";
 import { CardComponent } from "../components/Card";
 import { Header } from '../components/Header';
 
@@ -22,17 +22,25 @@ export const HomePage = () => {
         getProdutos();
     }, []);
 
+    const renderProdutos = () => {
+        return (
+            <SimpleGrid spacing={4} templateColumns='repeat(auto-fill, minmax(300px, 1fr))' padding={4}>
+            {
+                repo.map((produto) => (
+                    <div>
+                    <CardComponent imagem={produto.imagem} produto={produto.produto} id={produto.id}/>
+                    </div>
+                ))
+            }
+            </SimpleGrid>
+        )
+    }
+
+
     return (
         <>
             <Header />
-                {
-                    repo.map((produto) => (
-                        <div>
-                        <Text>A</Text>
-                        <CardComponent imagem={produto.imagem} produto={produto.produto} id={produto.id}/>
-                        </div>
-                    ))
-                }
+            {renderProdutos()}
         </>
     )
 

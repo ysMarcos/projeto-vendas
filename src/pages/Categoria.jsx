@@ -1,8 +1,9 @@
 import { useParams } from "react-router-dom"
 import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
-import { Text } from "@chakra-ui/react";
+import { SimpleGrid, Text } from "@chakra-ui/react";
 import { Header } from "../components/Header";
+import { CardComponent } from "../components/Card";
 
 export const CategoriaPage = () => {
     
@@ -23,14 +24,22 @@ export const CategoriaPage = () => {
         getProdutosCategoria();
     }, []);
     
+    const renderProdutosCategoria = () => {
+        return(
+            <SimpleGrid spacing={4} templateColumns='repeat(auto-fill, minmax(300px, 1fr))' padding={4}>
+                {
+                    repo.map((produto) => (
+                        <CardComponent imagem={produto.imagem} produto={produto.produto} id={produto.id} />
+                    ))
+                }
+            </SimpleGrid>
+        )
+    }
+
     return (
         <div>
             <Header />
-            <Text>{
-                repo.map((produto) => (
-                    <Text>{produto.produto}</Text>
-                ))}
-            </Text>
+            { renderProdutosCategoria() }
         </div>
     )
 }
