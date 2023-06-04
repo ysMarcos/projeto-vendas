@@ -6,7 +6,7 @@ export const CardComponent = ({produto, imagem, id}) => {
           <CardBody>
             <Image src={ `http://localhost/admin/fotos/${imagem}p.jpg`} />
             <Text>{produto}</Text>
-            <Button><a href={`http://localhost:3000/produto/${id}`}></a></Button>
+            <a href={`http://localhost:3000/produto/${id}`}><Button>Ver Item</Button></a>
           </CardBody>
         </Card>
     )

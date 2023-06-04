@@ -12,7 +12,6 @@ export const CategoriaPage = () => {
     const getProdutosCategoria = useCallback(async () => {
         try{
             const { data } = await axios.get(`http://localhost/admin/api/categoria/${categorias_id}`);
-            console.log(data)
             setRepo(data);
 
         } catch(error){
