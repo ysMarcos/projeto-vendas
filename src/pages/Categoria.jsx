@@ -29,7 +29,7 @@ export const CategoriaPage = () => {
             <SimpleGrid spacing={4} templateColumns='repeat(auto-fill, minmax(300px, 1fr))' padding={4}>
                 {
                     repo.map((produto) => (
-                        <CardComponent imagem={produto.imagem} produto={produto.produto} id={produto.id} />
+                        <CardComponent imagem={produto.imagem} produto={produto.produto} id={produto.id} valor={produto.valor}/>
                     ))
                 }
             </SimpleGrid>

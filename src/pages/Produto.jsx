@@ -1,4 +1,15 @@
-import { Text, Image, SimpleGrid, Heading, Grid, GridItem, Button } from "@chakra-ui/react"
+import { Text,
+        Image,
+        SimpleGrid, 
+        Heading,
+        useDisclosure,
+        Box,
+        Flex,
+        Button,
+        Input,
+        InputGroup,
+        InputRightElement
+    } from "@chakra-ui/react"
 import { Header } from "../components/Header";
 import { useParams } from "react-router-dom";
 import { useEffect, useState, useCallback } from "react";
@@ -11,6 +22,9 @@ export const ProdutoPage = () => {
     const { id } = useParams();
     const [ produtoRepo, setProdutoRepo ] = useState([]);
     const [ produtosRepo, setProdutosRepo ] = useState([]);
+    const [ calcFrete, setCalcFrete] = useState([]);
+
+    const { isOpen, onOpen, onClose } = useDisclosure();
 
     const getProduto = useCallback(async () => {
         try {
@@ -24,13 +38,23 @@ export const ProdutoPage = () => {
 
     const getOutrosProdutos = useCallback( async () => {
         try {
-            const { data } = await axios.get(`http://localhost/admin/api/outros/`)
-            setProdutosRepo(data)
+            const { data } = await axios.get(`http://localhost/admin/api/outros/`);
+            setProdutosRepo(data);
         } catch(error) {
             throw new Error(error);
         }
     })
 
+    /*const getCep = useCallback( async () => {
+        try{
+            const { data } = await axios.get(
+                `/calcula-frete/${cep_destino}/${peso}/${valor}/${tipo_do_frete}/${altura}/${largura}/${comprimento}`
+              )
+            setCalcFrete(data);
+        } catch(error){
+            throw new Error(error);
+        }
+    } )*/
 
     useEffect(() => {
         getProduto();
@@ -40,43 +64,124 @@ export const ProdutoPage = () => {
         getOutrosProdutos();
     }, [])
 
-    const renderProduto = () => {
+    // const renderProduto = () => {
         
-        const htmlString = String(produtoRepo.descricao)
+    //     const htmlString = String(produtoRepo.descricao)
         
+    //     return (
+    //         <Grid
+    //             h='50vh'
+    //             templateAreas={`
+    //                 "imagem titulo"
+    //                 "imagem preco"
+    //                 "imagem botao"
+    //             `}
+    //             gridTemplateRows={'15vh 1fr 15vh'}
+    //             gridTemplateColumns={'25vw 1fr'}
+    //             marginLeft='25vw'
+    //             marginTop='15vh'
+    //             marginBottom='5v'
+    //         >
+    //             <GridItem
+    //                 area={'imagem'}
+    //                 width='100%'
+    //                 >
+    //                 <Image src={`http://localhost/admin/fotos/${produtoRepo["imagem"]}m.jpg`} />
+    //             </GridItem>
+    //             <GridItem
+    //                 area={'titulo'}
+    //                 >
+    //                 <Heading> { produtoRepo.produto } </Heading>
+    //             </GridItem>
+    //             {/* <GridItem
+    //                 area={'descricao'}
+    //             >
+    //                 <div>{ parse(htmlString) }</div>
+    //             </GridItem> */}
+    //             <GridItem
+    //                 area={'preco'}
+    //             >
+    //                 <Heading as='h4' size='lg'>{ produtoRepo.valor }</Heading>
+    //             </GridItem>
+    //             <GridItem
+    //                 pl={0}
+    //                 area={'botao'}
+    //             >
+    //                 <Input placeholder="CEP" htmlSize={4} width='15vw' type='number'/>
+    //                 <Button onClick={onOpen}>Comprar</Button>
+
+    //                 <Modal isOpen={isOpen} onClose={onClose}>
+    //                     <ModalOverlay />
+    //                     <ModalContent>
+    //                         <ModalHeader>TItulo</ModalHeader>
+    //                         <ModalCloseButton />
+    //                         <ModalBody>
+    //                             <Text>Oi</Text>
+    //                         </ModalBody>
+    //                         <ModalFooter>
+    //                             <Button onClick={onClose}>Fechar</Button>
+    //                         </ModalFooter>
+    //                     </ModalContent>
+    //                 </Modal>
+    //             </GridItem>
+    //         </Grid>
+    //     )
+    // }
+
+
+    const modalFrete = () => {
         return (
-            <Grid
-                h='50vh'
-                templateAreas={`
-                    "imagem titulo"
-                    "imagem descricao"
-                    "imagem botao"
-                `}
-                gridTemplateRows={'15vh 1fr 7vh'}
-                gridTemplateColumns={'35vw 1fr'}
-            >
-                <GridItem
-                    area={'imagem'}
-                    >
+            <Text> OI </Text>
+        )
+    }
+
+    const renderProduto = () => {
+
+        const htmlString = String(produtoRepo.descricao);
+
+        return (
+            <Flex 
+                maxW='4xl' 
+                borderWidth='2px' 
+                margin={'auto'}
+                flexDir={'row'}
+                justifyContent={'space-around'}
+                >
+                <Box maxW='30vw'>
                     <Image src={`http://localhost/admin/fotos/${produtoRepo["imagem"]}m.jpg`} />
-                </GridItem>
-                <GridItem
-                    area={'titulo'}
-                    >
-                    <Heading> { produtoRepo.produto } </Heading>
-                </GridItem>
-                <GridItem
-                    area={'descricao'}
-                >
-                    <div>{ parse(htmlString) }</div>
-                </GridItem>
-                <GridItem
-                    pl={5}
-                    area={'botao'}
-                >
+                </Box>
+                <Box p='2em' m='1em'>
+                    <Heading as='h2' size='lg' >
+                        { 
+                            produtoRepo.produto 
+                        }
+                    </Heading>
+                    
+                    <Box w={'25vw'} h={'25vh'} borderWidth='1px' padding={5}>
+                        {
+                            parse(htmlString)
+                        }
+                    </Box>
+                    
+                    <InputGroup>
+                    
+                        <Input 
+                            size={'md'}
+                            width={'15vw'}
+                            placeholder="CEP" />
+
+                        <InputRightElement width={'10vw'}>
+                            <Button width={'10vw'}>
+                                Calcular Frete
+                            </Button>
+                        </InputRightElement>
+
+                    </InputGroup>
+                    <Text>Valor</Text>
                     <Button>Comprar</Button>
-                </GridItem>
-            </Grid>
+                </Box>
+
+            </Flex>
         )
     }
 
@@ -86,7 +191,7 @@ export const ProdutoPage = () => {
             {
                 produtosRepo.map((produto) => (
                     <div>
-                    <CardComponent imagem={produto.imagem} produto={produto.produto} id={produto.id}/>
+                    <CardComponent imagem={produto.imagem} produto={produto.produto} id={produto.id} valor={produto.valor}/>
                     </div>
                 ))
             }

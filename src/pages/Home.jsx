@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
-import { SimpleGrid, Text } from "@chakra-ui/react";
+import { SimpleGrid } from "@chakra-ui/react";
 import { CardComponent } from "../components/Card";
 import { Header } from '../components/Header';
 
@@ -28,7 +28,7 @@ export const HomePage = () => {
             {
                 repo.map((produto) => (
                     <div>
-                    <CardComponent imagem={produto.imagem} produto={produto.produto} id={produto.id}/>
+                    <CardComponent imagem={produto.imagem} produto={produto.produto} id={produto.id} valor={produto.valor}/>
                     </div>
                 ))
             }
