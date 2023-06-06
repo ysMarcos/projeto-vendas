@@ -37,7 +37,7 @@ export const RenderProduto = () => {
             ...form,
             cep_destino: value
         }, [form])
-    }, [form])
+    }, [])
 
     const handleRegistration = useCallback( async () => {
         try{
@@ -51,21 +51,22 @@ export const RenderProduto = () => {
         } catch(error){
             throw new Error(error);
         }
-    }, [frete] )
+    }, [] )
 
-    const getProduto = useCallback(async () => {
+    const getProduto = async () => {
         try {
             const { data } = await axios.get(`http://localhost/admin/api/produto/${id}`);
+            console.log(data)
             setProdutoRepo( data );
         }
         catch(error){
             throw new Error(error);
         }
-    }, [produtoRepo])
+    }
 
     useEffect(() => {
         getProduto();
-    }, [produtoRepo])
+    }, [])
 
     const htmlString = String(produtoRepo.descricao);
 

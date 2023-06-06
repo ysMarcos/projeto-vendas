@@ -31,12 +31,12 @@ export const ProdutoPage = () => {
         } catch(error) {
             throw new Error(error);
         }
-    }, [produtosRepo])
+    }, [])
 
 
     useEffect(() => {
         getOutrosProdutos();
-    }, [produtosRepo])
+    }, [])
 
     const modalFrete = () => {
         
