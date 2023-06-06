@@ -8,7 +8,8 @@ import { Text,
         Button,
         Input,
         InputGroup,
-        InputRightElement
+        InputRightElement,
+        Select
     } from "@chakra-ui/react"
 import { Header } from "../components/Header";
 import { useParams } from "react-router-dom";
@@ -22,7 +23,6 @@ export const ProdutoPage = () => {
     const { id } = useParams();
     const [ produtoRepo, setProdutoRepo ] = useState([]);
     const [ produtosRepo, setProdutosRepo ] = useState([]);
-    const [ calcFrete, setCalcFrete] = useState([]);
 
     const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -130,6 +130,8 @@ export const ProdutoPage = () => {
 
 
     const modalFrete = () => {
+        
+        
         return (
             <Text> OI </Text>
         )
@@ -147,7 +149,7 @@ export const ProdutoPage = () => {
                 flexDir={'row'}
                 justifyContent={'space-around'}
                 >
-                <Box maxW='30vw'>
+                <Box maxW='30vw' margin={'auto'}>
                     <Image src={`http://localhost/admin/fotos/${produtoRepo["imagem"]}m.jpg`} />
                 </Box>
                 <Box p='2em' m='1em'>
@@ -157,17 +159,25 @@ export const ProdutoPage = () => {
                         }
                     </Heading>
                     
-                    <Box w={'25vw'} h={'25vh'} borderWidth='1px' padding={5}>
+                    <Box w={'20vw'} h={'20vh'} borderWidth='1px' padding={5}>
                         {
                             parse(htmlString)
                         }
                     </Box>
-                    
+                    <Select id="parcela">
+                        <option value="1">1x R${ Math.round(produtoRepo.valor / 1) }</option>
+                        <option value="2">2x R${ Math.round(produtoRepo.valor / 2) }</option>
+                        <option value="3">3x R${ Math.round(produtoRepo.valor / 3) }</option>
+                        <option value="4">4x R${ Math.round(produtoRepo.valor / 4) }</option>
+                        <option value="5">5x R${ Math.round(produtoRepo.valor / 5) }</option>
+                        <option value="6">6x R${ Math.round(produtoRepo.valor / 6) }</option>
+
+                    </Select>
                     <InputGroup>
                     
                         <Input 
                             size={'md'}
-                            width={'15vw'}
+                            width={'10vw'}
                             placeholder="CEP" />
 
                         <InputRightElement width={'10vw'}>
@@ -177,10 +187,7 @@ export const ProdutoPage = () => {
                         </InputRightElement>
 
                     </InputGroup>
-                    <Text>Valor</Text>
-                    <Button>Comprar</Button>
                 </Box>
-
             </Flex>
         )
     }
