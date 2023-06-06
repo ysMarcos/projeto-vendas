@@ -5,10 +5,10 @@ import {
     MenuButton,
     MenuList,
     MenuItem,
-    Text
+    Text,
+    Box
 } from '@chakra-ui/react'
-import { ArrowDownIcon } from "@chakra-ui/icons";
-import "./Header.css";
+import { HamburgerIcon } from "@chakra-ui/icons";
 
 
 export const Header = () => {
@@ -31,20 +31,22 @@ export const Header = () => {
 
 
     return (
-        <header>
-            <a href="http://localhost:3000/"><Text>Home</Text></a>
-            <Menu isLazy>
-                <MenuButton>Categorias<ArrowDownIcon /></MenuButton>
-                <MenuList>
-                    {repo.map(categoria =>  (
-                        <a href={`http://localhost:3000/categoria/${categoria.id}`}>
-                            <MenuItem>
-                                {categoria.categoria}
-                            </MenuItem>
-                        </a>
-                        ) )}
-                </MenuList>
-            </Menu>
-        </header>
+        <Box bg={'gray.500'}>
+            <header>
+                <a href="http://localhost:3000/"><Text>Home</Text></a>
+                <Menu isLazy>
+                    <MenuButton><HamburgerIcon marginRight={'0.5vw'}/>Departamentos</MenuButton>
+                    <MenuList>
+                        {repo.map(categoria =>  (
+                            <a href={`http://localhost:3000/categoria/${categoria.id}`}>
+                                <MenuItem>
+                                    {categoria.categoria}
+                                </MenuItem>
+                            </a>
+                            ) )}
+                    </MenuList>
+                </Menu>
+            </header>
+        </Box>
     )
 }

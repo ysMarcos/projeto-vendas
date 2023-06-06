@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
-import { SimpleGrid } from "@chakra-ui/react";
+import { Box, Heading, SimpleGrid } from "@chakra-ui/react";
 import { CardComponent } from "../components/Card";
 import { Header } from '../components/Header';
 
@@ -38,10 +38,11 @@ export const HomePage = () => {
 
 
     return (
-        <>
+        <Box bg={'teal.900'}>
             <Header />
+            <Heading>Bem vindo!</Heading>
             {renderProdutos()}
-        </>
+        </Box>
     )
 
 }

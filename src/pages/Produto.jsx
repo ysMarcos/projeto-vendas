@@ -1,28 +1,17 @@
-import { Text,
-        
+import { 
         SimpleGrid, 
-        Heading,
-        useDisclosure,
-
-    } from "@chakra-ui/react"
-import { Header } from "../components/Header";
-
+        Heading
+} from "@chakra-ui/react"
 import { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 
+import { Header } from "../components/Header";
 import { CardComponent } from "../components/Card";
 import { RenderProduto } from "../components/Produto";
 
-export const ProdutoPage = () => {
-
-    
+export const ProdutoPage = () => {  
     
     const [ produtosRepo, setProdutosRepo ] = useState([]);
-
-    const { isOpen, onOpen, onClose } = useDisclosure();
-
-
-
 
     const getOutrosProdutos = useCallback( async () => {
         try {
@@ -38,23 +27,13 @@ export const ProdutoPage = () => {
         getOutrosProdutos();
     }, [])
 
-    const modalFrete = () => {
-        
-        
-        return (
-            <Text> OI </Text>
-        )
-    }
-
-
-
     const renderOutros = () => {
         return (
             <SimpleGrid spacing={4} templateColumns='repeat(auto-fill, minmax(300px, 1fr))' padding={4}>
             {
                 produtosRepo.map((produto) => (
                     <div>
-                    <CardComponent imagem={produto.imagem} produto={produto.produto} id={produto.id} valor={produto.valor}/>
+                        <CardComponent imagem={produto.imagem} produto={produto.produto} id={produto.id} valor={produto.valor}/>
                     </div>
                 ))
             }

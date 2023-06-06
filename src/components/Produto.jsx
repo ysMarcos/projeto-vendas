@@ -20,44 +20,47 @@ export const RenderProduto = () => {
     const { id } = useParams();
     const [ produtoRepo, setProdutoRepo ] = useState([]);
     const [ frete, setFrete ] = useState([])
-    const [ form, setForm ] = useState({
-        cep_destino: "",
-        peso: 5,
-        valor: produtoRepo.valor,
-        tipo_do_frete: 40010,
-        altura: 5,
-        largura: 10,
-        comprimento: 20
-    })
-
+    const [ form, setForm ] = useState()
+    
     const handleInputChange = useCallback((event) => {
         const { value } = event.target;
 
         setForm({
             ...form,
-            cep_destino: value
-        }, [form])
-    }, [])
+            cep_destino: value,
+            valor: produtoRepo.valor
+        })
+    }, [form])
 
     const handleRegistration = useCallback( async () => {
         try{
-
+            console.log(form)
             const {cep_destino, peso, valor, tipo_do_frete, altura, largura, comprimento} = form;
 
-            const { data } = await axios.get(
+            const { data } = await axios.post(
                 `/calcula-frete/${cep_destino}/${peso}/${valor}/${tipo_do_frete}/${altura}/${largura}/${comprimento}`
             )
             setFrete(data);
         } catch(error){
             throw new Error(error);
         }
-    }, [] )
+    }, [frete] )
 
     const getProduto = async () => {
         try {
             const { data } = await axios.get(`http://localhost/admin/api/produto/${id}`);
-            console.log(data)
             setProdutoRepo( data );
+            setForm(
+                {
+                    cep_destino: '',
+                    peso: 5,
+                    valor: 0,
+                    tipo_do_frete: 40010,
+                    altura: 5,
+                    largura: 10,
+                    comprimento: 20
+                }
+            )
         }
         catch(error){
             throw new Error(error);
@@ -67,6 +70,7 @@ export const RenderProduto = () => {
     useEffect(() => {
         getProduto();
     }, [])
+
 
     const htmlString = String(produtoRepo.descricao);
 
@@ -110,7 +114,6 @@ export const RenderProduto = () => {
                         placeholder="CEP"
                         onChange={handleInputChange}
                     />
-
                     <InputRightElement width={'10vw'}>
                         <Button width={'10vw'} onClick={handleRegistration}>
                             Calcular Frete
